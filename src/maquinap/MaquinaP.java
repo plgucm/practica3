@@ -41,26 +41,29 @@ public class MaquinaP {
 		Scanner sc;
 		try {
 			sc = new Scanner(new File(archivoDeEntrada));
-			ArrayList<String> lineSinBasura = new ArrayList<String>(); 
+			ArrayList<String> lineaSinBasura = new ArrayList<String>(); 
 			
 			while (sc.hasNextLine()){
-				String [] line = sc.nextLine().split(" ");
+				String [] linea = sc.nextLine().split(" ");
+				
+				final String espacios = " ", tabulaciones = "\t";
 				
 				String dato = null;
-				for (int i = 0, s = line.length; i < s; ++i){
-					dato = line[i];
-					if (!dato.contains(" ") && !dato.contains("\t")){
-						lineSinBasura.add(dato);						
+				for (int i = 0, s = linea.length; i < s; ++i){
+					dato = linea[i];
+					if (!dato.contains(espacios) && !dato.contains(tabulaciones)){
+						lineaSinBasura.add(dato);						
 					}					
 				}
 				
-				System.out.println(
-						Arrays.toString(lineSinBasura.toArray())+'\n');
-				
-				Object instruccion = transformaEnInstruccion(lineSinBasura);
-				agregaEnMemoriaDePrograma(instruccion);
-				
-				lineSinBasura.clear();
+				if (lineaSinBasura.size() > 0){
+					System.out.println(Arrays.toString(lineaSinBasura.toArray())+'\n');
+					
+					Object instruccion = transformaEnInstruccion(lineaSinBasura);
+					agregaEnMemoriaDePrograma(instruccion);
+					
+					lineaSinBasura.clear();
+				}
 			}
 			
 			sc.close();			
