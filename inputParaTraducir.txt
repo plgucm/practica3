@@ -1,0 +1,127 @@
+declarations { 
+	 type TArbol = pointer TCelda; 
+	 
+	 type TCelda = struct { 
+		 int valor; 
+		 TArbol izq; 
+		 TArbol der 
+	 }; 
+	 
+	 type TSecuencia = int[10]; 
+	 
+	 var TSecuencia secuencia; 
+	 var TArbol arbol; 
+	 
+	 proc LeeValores(TArbol & arbol) { 
+		 declarations { 
+		 	 var bool fin; 
+		 	 var int valor; 
+		 
+			 proc LeeValor(int & valor) { 
+				 instructions { 
+					 read valor; 
+					 fin = (valor == -1) 
+				 } 
+			 }; 
+		 
+			 proc GuardaValor(TArbol & arbol) { 
+			 	 declarations { 	 
+					 proc AlmacenaValor() { 
+						 instructions { 
+							 new arbol; 
+							 arbol->.valor = valor; 
+							 arbol->.izq = null; 
+							 arbol->.der = null 
+						 } 
+				 	} 
+			 	 } 
+		 
+				 instructions { 
+					 if arbol == null then 
+					 	AlmacenaValor() 
+					 else if valor < arbol->.valor then 
+					 	GuardaValor(arbol->.izq) 
+					 else if valor > arbol->.valor then 
+					 	GuardaValor(arbol->.der) 
+				 } 
+		 	} 
+	 
+		 instructions { 
+		 	fin = false; 
+			 do { 
+			 	LeeValor(valor); 
+			 	if not fin then 
+			 		GuardaValor(arbol)  
+			 } while(not fin) 
+		 } 
+	 } 
+	 
+	 proc ConstruyeSecOrdenada(TArbol arbol) { 
+		 	 declarations { 
+				 int numElem; 
+				 
+				 proc AlmacenaEnSecuencia(TArbol arbol) { 
+					 instructions { 
+						 if (numElem < 10) and (arbol != null) then { 
+							 AlmacenaEnSecuencia(arbol->.izq); 
+							 if numElem < 10 then { 
+								 secuencia[numElem] = arbol->.valor; 
+								 numElem = numElem + 1 
+							 } 
+							 AlmacenaEnSecuencia(arbol->.der); 
+						 } 
+					 } 
+				 } 
+			 
+			 instructions { 
+				 numElem = 0; 
+				 AlmacenaEnSecuencia(arbol); 
+				 if numElem < 10 then 
+				 	secuencia[numElem]= -1; 
+			 } 
+	 	} 
+	 
+	 proc LiberaArbol(TArbol & arbol) { 
+		 declarations{ 
+		 
+			 proc Libera(TArbol arbol) { 
+				 instructions { 
+					 if arbol != null then { 
+					 Libera(arbol->.izq); 
+					 Libera(arbol->.der); 
+					 delete arbol; 
+					 } 
+		 		 } 
+	 		} 
+	 
+		 instructions{ 
+			 Libera(arbol); 
+			 arbol = null 
+		 } 
+	 } 
+	 
+	 proc MuestraSecuencia(TSecuencia secuencia) { 
+		 declarations { 
+			 int i; 
+			 bool fin 
+		 } 
+		 instructions { 
+			 i = 0; 
+			 fin = (secuencia[0] == -1); 
+			 while not fin do { 
+				 write secuencia[i]; 
+				 i == i+1; 
+				 fin = (i = 10); 
+				 if not fin then 
+				 fin = (secuencia[i]=-1) 
+		 	} 
+		 } 
+	}  
+
+instructions { 
+	 LeeValores(arbol); 
+	 ConstruyeSecOrdenada(arbol); 
+	 LiberaArbol(arbol); 
+	 MuestraSecuencia(secuencia) 
+} 
+ 
