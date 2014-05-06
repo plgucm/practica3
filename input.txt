@@ -1,3 +1,4 @@
+
 declarations { 
 	 type TArbol = pointer TCelda; 
 	 
