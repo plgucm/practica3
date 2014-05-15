@@ -1,8 +1,9 @@
-package maquinap.instrucciones;
+package maquinap.instrucciones.io;
 
 import java.util.Stack;
 
 import maquinap.MaquinaP;
+import maquinap.instrucciones.Instruccion;
 import maquinap.valor.Valor;
 
 public class Escribe extends Instruccion {

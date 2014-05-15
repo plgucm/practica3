@@ -1,8 +1,9 @@
-package maquinap.instrucciones;
+package maquinap.instrucciones.io;
 
 import java.util.Scanner;
 
 import maquinap.MaquinaP;
+import maquinap.instrucciones.Instruccion;
 import maquinap.valor.Bool;
 import maquinap.valor.Int;
 import maquinap.valor.Valor;
