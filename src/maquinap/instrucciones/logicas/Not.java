@@ -7,17 +7,17 @@ import maquinap.instrucciones.Instruccion;
 import maquinap.valor.Bool;
 import maquinap.valor.Valor;
 
-public class Neg extends Instruccion {
+public class Not extends Instruccion {
 	
 	@Override
 	public void ejecutar(MaquinaP maq) throws Exception {
 		Stack<Valor<?>> pe = maq.getPilaEvaluacion();
 		if (pe.isEmpty()){ 
-			throw new Exception("NEG -> falta segundo operando");
+			throw new Exception("NOT -> falta segundo operando");
 		}		
 		Valor<?> valor1 = pe.pop();
 		if (!(valor1.getValor() instanceof Boolean)){
-			throw new Exception("NEG -> operando no de tipo bool");
+			throw new Exception("NOT -> operando no de tipo bool");
 		}
 		Bool newValue = new Bool(!(Boolean)valor1.getValor());
 		maq.getPilaEvaluacion().push(newValue);

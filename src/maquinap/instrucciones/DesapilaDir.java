@@ -24,4 +24,5 @@ public class DesapilaDir extends Instruccion {
 		maq.getMemoriaDatos().put(dir, pila.pop());
 		maq.incrementaContadorPrograma();
 	}
+	
 }
