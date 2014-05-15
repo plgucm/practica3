@@ -35,6 +35,10 @@ public class MaquinaP {
 	public void incrementaContadorPrograma(){
 		++contadorPrograma;
 	}
+	
+	public void aumentarContadorPrograma(int cantidad){
+		contadorPrograma += cantidad;
+	}
 
 	public int getContadorPrograma() {
 		return contadorPrograma;
