@@ -9,28 +9,42 @@ import java.util.Map;
 import java.util.Scanner;
 import java.util.Stack;
 
+import maquinap.valor.Valor;
+
 public class MaquinaP {
 
-	private final Stack<Object> pilaEvaluacion = new Stack<Object>();
+	private final Map<Integer, Valor<?>> memoriaDatos = new HashMap<Integer, Valor<?>>();
+	private final Stack<Valor<?>> pilaEvaluacion = new Stack<Valor<?>>();
 	private final List<Object> memoriaPrograma = new ArrayList<Object>();
-	private final Integer contadorPrograma = new Integer(0);
-	private final Map<Object, Object> memoriaDatos = new HashMap<Object, Object>();
+	private int contadorPrograma = 0;
+	private boolean ejecuta = false;
 
-	public Stack<Object> getPilaEvaluacion() {
+
+	public Map<Integer, Valor<?>> getMemoriaDatos() {
+		return memoriaDatos;
+	}
+	
+	public Stack<Valor<?>> getPilaEvaluacion() {
 		return pilaEvaluacion;
 	}
 
 	public List<Object> getMemoriaPrograma() {
 		return memoriaPrograma;
 	}
+	
+	public void incrementaContadorPrograma(){
+		++contadorPrograma;
+	}
 
-	public Integer getContadorPrograma() {
+	public int getContadorPrograma() {
 		return contadorPrograma;
 	}
-
-	public Map<Object, Object> getMemoriaDatos() {
-		return memoriaDatos;
+	
+	public boolean isEjecuta() {
+		return ejecuta;
 	}
+	
+	//////////////////7777
 	
 	public static void main(String [] args){
 		MaquinaP mp = new MaquinaP();
