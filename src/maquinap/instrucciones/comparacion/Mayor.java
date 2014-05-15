@@ -12,12 +12,16 @@ public class Mayor extends Instruccion {
 	@Override
 	public void ejecutar(MaquinaP maq) throws Exception {
 		Stack<Valor<?>> pe = maq.getPilaEvaluacion();
-		if (pe.isEmpty()){ return; }		
+		if (pe.isEmpty()){ 
+			throw new Exception("MAYOR -> faltan operandos");
+		}		
 		Valor<?> valor1 = pe.pop();
-		if (pe.isEmpty()){ return; }		
+		if (pe.isEmpty()){ 
+			throw new Exception("MAYOR -> faltan operandos");
+		}	
 		Valor<?> valor2 = pe.pop();
 		if (!(valor2.getValor().getClass().equals(valor1.getValor().getClass()))){
-			return;
+			throw new Exception("MAYOR -> operandos tienen distinto tipo");
 		}
 		boolean comparacion;
 		if (valor1.getValor().getClass().equals(Boolean.class)){

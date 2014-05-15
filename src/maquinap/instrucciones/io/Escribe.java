@@ -11,7 +11,9 @@ public class Escribe extends Instruccion {
 	@Override
 	public void ejecutar(MaquinaP maq) throws Exception{
 		Stack<Valor<?>> pe = maq.getPilaEvaluacion();
-		if (pe.isEmpty()){ return; }		
+		if (pe.isEmpty()){ 
+			throw new Exception("ESCRIBE -> falta operando");
+		}		
 		Valor<?> valor = pe.pop();
 		System.out.println(valor);
 		maq.aumentarContadorPrograma(1);
