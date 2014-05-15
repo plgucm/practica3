@@ -97,7 +97,7 @@ public class MaquinaP {
 				}
 				
 				if (lineaSinBasura.size() > 0){
-					System.out.println(Arrays.toString(lineaSinBasura.toArray())+'\n');
+					//System.out.println(Arrays.toString(lineaSinBasura.toArray())+'\n');
 					
 					Instruccion instruccion = transformaEnInstruccion(lineaSinBasura);
 					agregaEnMemoriaDePrograma(instruccion);
@@ -108,8 +108,12 @@ public class MaquinaP {
 			
 			sc.close();		
 			
-			
-			
+			Lee.abreEscaner();
+			while (contadorPrograma < memoriaPrograma.size()){
+				System.out.println("contadorPrograma:"+contadorPrograma);
+				memoriaPrograma.get(contadorPrograma).ejecutar(this);
+			}
+			Lee.cierraEscaner();
 			
 		} catch (Exception e) {
 			e.printStackTrace();
