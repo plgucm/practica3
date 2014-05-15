@@ -10,17 +10,21 @@ import maquinap.valor.Valor;
 public class Mod extends Instruccion {
 	
 	@Override
-	public void ejecutar(MaquinaP maq) {
+	public void ejecutar(MaquinaP maq) throws Exception {
 		Stack<Valor<?>> pe = maq.getPilaEvaluacion();
-		if (pe.isEmpty()){ return; }		
+		if (pe.isEmpty()){ 
+			throw new Exception("MOD -> faltan operandos");
+		}		
 		Valor<?> valor1 = pe.pop();
 		if (!(valor1.getValor() instanceof Integer)){
-			return;
+			throw new Exception("MOD -> segundo operando no de tipo entero");
 		}
-		if (pe.isEmpty()){ return; }		
+		if (pe.isEmpty()){ 
+			throw new Exception("MOD -> faltan operandos");
+		}		
 		Valor<?> valor2 = pe.pop();
 		if (!(valor2.getValor() instanceof Integer)){
-			return;
+			throw new Exception("MOD -> primer operando no de tipo entero");
 		}
 		Int newValue = new Int((Integer)valor2.getValor()%(Integer)valor1.getValor());
 		maq.getPilaEvaluacion().push(newValue);

@@ -11,7 +11,7 @@ import maquinap.valor.Valor;
 public class Lee extends Instruccion {
 
 	@Override
-	public void ejecutar(MaquinaP maq) {
+	public void ejecutar(MaquinaP maq) throws Exception {
 		Scanner sc = new Scanner(System.in);
 		String value = sc.nextLine();		
 		sc.close();

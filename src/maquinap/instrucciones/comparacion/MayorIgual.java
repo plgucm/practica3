@@ -10,7 +10,7 @@ import maquinap.valor.Valor;
 public class MayorIgual extends Instruccion {
 	
 	@Override
-	public void ejecutar(MaquinaP maq) {
+	public void ejecutar(MaquinaP maq) throws Exception {
 		Stack<Valor<?>> pe = maq.getPilaEvaluacion();
 		if (pe.isEmpty()){ return; }		
 		Valor<?> valor1 = pe.pop();
