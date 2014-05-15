@@ -22,7 +22,7 @@ public class Div extends Instruccion {
 		if (!(valor2.getValor() instanceof Integer)){
 			return;
 		}
-		Int newValue = new Int((Integer)valor2.getValor()*(Integer)valor1.getValor());
+		Int newValue = new Int((Integer)valor2.getValor()/(Integer)valor1.getValor());
 		maq.getPilaEvaluacion().push(newValue);
 		maq.aumentarContadorPrograma(1);
 	}
