@@ -9,12 +9,13 @@ import maquinap.valor.Int;
 import maquinap.valor.Valor;
 
 public class Lee extends Instruccion {
+	
+	private static Scanner sc;
 
 	@Override
 	public void ejecutar(MaquinaP maq) throws Exception {
-		Scanner sc = new Scanner(System.in);
+		System.out.print("> ");
 		String value = sc.nextLine();		
-		sc.close();
 		Valor<?> valueMP;
 		if (value.equalsIgnoreCase("true")){
 			valueMP = new Bool(new Boolean(true));
@@ -25,6 +26,14 @@ public class Lee extends Instruccion {
 		}
 		maq.getPilaEvaluacion().push(valueMP);
 		maq.aumentarContadorPrograma(1);
+	}
+	
+	public static void abreEscaner(){
+		sc = new Scanner(System.in);
+	}
+	
+	public static void cierraEscaner(){
+		sc.close();
 	}
 
 }

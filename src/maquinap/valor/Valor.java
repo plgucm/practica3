@@ -2,7 +2,7 @@ package maquinap.valor;
 
 public abstract class Valor<T> {
 	
-	private T val;
+	protected T val;
 	
 	public Valor(T val){
 		this.val = val;
@@ -24,5 +24,15 @@ public abstract class Valor<T> {
 	@Override
 	public boolean equals(Object obj) {
 		return val.equals(((Valor<?>) obj).getValor());
+	}
+	
+	public boolean menor(Valor<?> otro){
+		throw new UnsupportedOperationException(getClass().getSimpleName()
+				+ " operación no implementada.");
+	}
+	
+	public boolean mayor(Valor<?> otro){
+		throw new UnsupportedOperationException(getClass().getSimpleName()
+				+ " operación no implementada.");
 	}
 }

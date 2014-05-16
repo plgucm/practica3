@@ -2,17 +2,15 @@ package maquinap;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 import java.util.Stack;
 
-import maquinap.instrucciones.Apila;
-import maquinap.instrucciones.ApilaDir;
-import maquinap.instrucciones.DesapilaDir;
 import maquinap.instrucciones.Instruccion;
+import maquinap.instrucciones.apila.Apila;
+import maquinap.instrucciones.apila.ApilaDir;
 import maquinap.instrucciones.aritmeticas.Div;
 import maquinap.instrucciones.aritmeticas.Mod;
 import maquinap.instrucciones.aritmeticas.Mult;
@@ -25,6 +23,7 @@ import maquinap.instrucciones.comparacion.Mayor;
 import maquinap.instrucciones.comparacion.MayorIgual;
 import maquinap.instrucciones.comparacion.Menor;
 import maquinap.instrucciones.comparacion.MenorIgual;
+import maquinap.instrucciones.desapila.DesapilaDir;
 import maquinap.instrucciones.io.Escribe;
 import maquinap.instrucciones.io.Lee;
 import maquinap.instrucciones.logicas.And;
@@ -97,7 +96,7 @@ public class MaquinaP {
 				}
 				
 				if (lineaSinBasura.size() > 0){
-					System.out.println(Arrays.toString(lineaSinBasura.toArray())+'\n');
+					//System.out.println(Arrays.toString(lineaSinBasura.toArray())+'\n');
 					
 					Instruccion instruccion = transformaEnInstruccion(lineaSinBasura);
 					agregaEnMemoriaDePrograma(instruccion);
@@ -108,8 +107,10 @@ public class MaquinaP {
 			
 			sc.close();		
 			
-			
-			
+			while (contadorPrograma < memoriaPrograma.size()){
+				System.out.println("contadorPrograma:"+contadorPrograma);
+				memoriaPrograma.get(contadorPrograma).ejecutar(this);
+			}
 			
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -192,6 +193,10 @@ public class MaquinaP {
 
 	private void agregaEnMemoriaDePrograma(Instruccion instruccion) {
 		memoriaPrograma.add(instruccion);
+	}
+
+	public void setContadorPrograma(int dir) {
+		contadorPrograma = dir;
 	}	
 	
 

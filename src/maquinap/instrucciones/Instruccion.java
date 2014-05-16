@@ -9,4 +9,8 @@ public abstract class Instruccion {
 				+ " no está implementada.");
 	}
 	
+	@Override
+	public String toString() {
+		return getClass().getSimpleName();
+	}
 }
