@@ -1,8 +1,9 @@
-package maquinap.instrucciones;
+package maquinap.instrucciones.desapila;
 
 import java.util.Stack;
 
 import maquinap.MaquinaP;
+import maquinap.instrucciones.Instruccion;
 import maquinap.valor.Valor;
 
 public class DesapilaDir extends Instruccion {

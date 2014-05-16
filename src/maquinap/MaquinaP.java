@@ -9,15 +9,16 @@ import java.util.Map;
 import java.util.Scanner;
 import java.util.Stack;
 
+import maquinap.instrucciones.Instruccion;
 import maquinap.valor.Valor;
 
 public class MaquinaP {
 
 	private final Map<Integer, Valor<?>> memoriaDatos = new HashMap<Integer, Valor<?>>();
 	private final Stack<Valor<?>> pilaEvaluacion = new Stack<Valor<?>>();
-	private final List<Object> memoriaPrograma = new ArrayList<Object>();
+	private final List<Instruccion> memoriaPrograma = new ArrayList<Instruccion>();
 	private int contadorPrograma = 0;
-	private boolean ejecuta = false;
+	private boolean ejecuta = true;
 
 
 	public Map<Integer, Valor<?>> getMemoriaDatos() {
@@ -28,12 +29,16 @@ public class MaquinaP {
 		return pilaEvaluacion;
 	}
 
-	public List<Object> getMemoriaPrograma() {
+	public List<Instruccion> getMemoriaPrograma() {
 		return memoriaPrograma;
 	}
 	
+	public void setContadorPrograma(int contadorPrograma) {
+		this.contadorPrograma = contadorPrograma;
+	}
+	
 	public void incrementaContadorPrograma(){
-		++contadorPrograma;
+		setContadorPrograma(contadorPrograma + 1);
 	}
 
 	public int getContadorPrograma() {

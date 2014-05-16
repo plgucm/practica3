@@ -1,6 +1,7 @@
-package maquinap.instrucciones;
+package maquinap.instrucciones.apila;
 
 import maquinap.MaquinaP;
+import maquinap.instrucciones.Instruccion;
 import maquinap.valor.Valor;
 
 

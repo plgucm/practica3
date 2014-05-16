@@ -8,4 +8,9 @@ public abstract class Instruccion {
 		throw new UnsupportedOperationException(getClass().getSimpleName()
 				+ " no está implementada.");
 	}
+	
+	@Override
+	public String toString() {
+		return getClass().getSimpleName();
+	}
 }
