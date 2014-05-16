@@ -19,7 +19,7 @@ public class Lee extends Instruccion {
 		if (value.equalsIgnoreCase("true")){
 			valueMP = new Bool(new Boolean(true));
 		} else if (value.equalsIgnoreCase("false")){
-			valueMP = new Bool(new Boolean(true));			
+			valueMP = new Bool(new Boolean(false));			
 		} else {
 			valueMP = new Int(Integer.valueOf(value));
 		}
