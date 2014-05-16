@@ -29,6 +29,7 @@ public class Reserva extends Instruccion {
 					break;
 				}
 			} else {
+				espacio = 0;
 				direccion++;
 			}
 		}
