@@ -25,6 +25,7 @@ public class Libera extends Instruccion {
 			md.set(dir, new Vacio());			
 		}
 		
+		maq.aumentarContadorPrograma(1);		
 	}
 
 }

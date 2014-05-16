@@ -26,7 +26,10 @@ public class Div extends Instruccion {
 		if (!(valor2.getValor() instanceof Integer)){
 			throw new Exception("DIV -> primer operando no de tipo entero");
 		}
-		Int newValue = new Int((Integer)valor2.getValor()/(Integer)valor1.getValor());
+		int op1 = (Integer)valor2.getValor();
+		int op2 = (Integer)valor1.getValor();
+		int res = op1/op2;
+		Int newValue = new Int(res);
 		maq.getPilaEvaluacion().push(newValue);
 		maq.aumentarContadorPrograma(1);
 	}

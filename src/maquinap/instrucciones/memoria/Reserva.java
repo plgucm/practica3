@@ -43,6 +43,8 @@ public class Reserva extends Instruccion {
 		
 		Int item = new Int(new Integer(direccion));
 		maq.getPilaEvaluacion().push(item);
+		
+		maq.aumentarContadorPrograma(1);		
 	}
 
 }

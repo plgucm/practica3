@@ -117,6 +117,7 @@ public class MaquinaP {
 			Lee.abreEscaner();
 			while (contadorPrograma < memoriaPrograma.size()){
 				System.out.println("contadorPrograma:"+contadorPrograma);
+				System.out.println("pilaEvaluacion:"+getPilaEvaluacion().toString());
 				memoriaPrograma.get(contadorPrograma).ejecutar(this);
 			}
 			Lee.cierraEscaner();
