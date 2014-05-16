@@ -29,6 +29,8 @@ import maquinap.instrucciones.io.Lee;
 import maquinap.instrucciones.logicas.And;
 import maquinap.instrucciones.logicas.Not;
 import maquinap.instrucciones.logicas.Or;
+import maquinap.instrucciones.memoria.Libera;
+import maquinap.instrucciones.memoria.Reserva;
 import maquinap.valor.Int;
 import maquinap.valor.Valor;
 
@@ -112,10 +114,12 @@ public class MaquinaP {
 			
 			sc.close();		
 			
+			Lee.abreEscaner();
 			while (contadorPrograma < memoriaPrograma.size()){
 				System.out.println("contadorPrograma:"+contadorPrograma);
 				memoriaPrograma.get(contadorPrograma).ejecutar(this);
 			}
+			Lee.cierraEscaner();
 			
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -183,12 +187,14 @@ public class MaquinaP {
 			
 			if (inst1.equalsIgnoreCase("APILA")){
 				return new Apila(new Int(Integer.valueOf(inst2)));
-			} else if (inst1.equalsIgnoreCase("DESAPILA")){
-				// return new Desapila(new Int(Integer.valueOf(inst2)));
 			} else if (inst1.equalsIgnoreCase("APILA_DIR")){
 				return new ApilaDir(Integer.valueOf(inst2));
 			} else if (inst1.equalsIgnoreCase("DESAPILA_DIR")){
 				return new DesapilaDir(Integer.valueOf(inst2));
+			}else if (inst1.equalsIgnoreCase("RESERVA")){
+				return new Reserva(Integer.valueOf(inst2));
+			} else if (inst1.equalsIgnoreCase("LIBERA")){
+				return new Libera(Integer.valueOf(inst2));
 			}	
 			
 		}

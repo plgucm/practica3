@@ -38,6 +38,7 @@ public class Reserva extends Instruccion {
 			for (int i = 0; i < cantidad; ++i){
 				md.add(new Vacio());
 			}
+			direccion = md.size()-cantidad;
 		}
 		
 		Int item = new Int(new Integer(direccion));
