@@ -99,6 +99,11 @@ public class MaquinaP {
 
 	private void agregaEnMemoriaDePrograma(Object instruccion) {
 		
+	}
+
+	public void aumentarContadorPrograma(int i) {
+		contadorPrograma += i;
+		
 	}	
 	
 
