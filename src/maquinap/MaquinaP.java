@@ -34,15 +34,20 @@ import maquinap.valor.Valor;
 
 public class MaquinaP {
 
-	private final Map<Integer, Valor<?>> memoriaDatos = new HashMap<Integer, Valor<?>>();
+	private final Map<Integer, Valor<?>> memoriaDatosEstatica = new HashMap<Integer, Valor<?>>();	
+	private final List<Valor<?>> memoriaDatosDinamica = new ArrayList<Valor<?>>();	
 	private final Stack<Valor<?>> pilaEvaluacion = new Stack<Valor<?>>();
 	private final List<Instruccion> memoriaPrograma = new ArrayList<Instruccion>();
 	private int contadorPrograma = 0;
 	private boolean ejecuta = false;
 
 
-	public Map<Integer, Valor<?>> getMemoriaDatos() {
-		return memoriaDatos;
+	public Map<Integer, Valor<?>> getMemoriaDatosEstatica() {
+		return memoriaDatosEstatica;
+	}
+	
+	public List<Valor<?>> getMemoriaDatosDinamica() {
+		return memoriaDatosDinamica;
 	}
 	
 	public Stack<Valor<?>> getPilaEvaluacion() {

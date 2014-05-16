@@ -22,7 +22,7 @@ public class DesapilaDir extends Instruccion {
 			throw new UnsupportedOperationException(getClass().getSimpleName()
 					+ " pila de evaluación vacía.");
 		
-		maq.getMemoriaDatos().put(dir, pila.pop());
+		maq.getMemoriaDatosEstatica().put(dir, pila.pop());
 		maq.incrementaContadorPrograma();
 	}
 	

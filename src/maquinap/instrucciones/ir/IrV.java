@@ -34,6 +34,6 @@ public class IrV extends Instruccion {
 
 		else
 			throw new UnsupportedOperationException(getClass().getSimpleName()
-					+ " la cima no es un entero, es " + cima.getClass());
+					+ " la cima no es un bool, es " + cima.getClass());
 	}
 }
