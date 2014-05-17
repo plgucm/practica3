@@ -23,13 +23,13 @@ public class Contador {
 				System.out.println(row++ + " " + line);
 			}
 		} catch (Exception e) {
-			throw new IOException("Error al leer la línea " + row + ": " + line.toLowerCase());
+			throw new IOException("Error al leer la lï¿½nea " + row + ": " + line.toLowerCase());
 		}
 	}
 	
 	public static void main(String[] args) {
 		try {
-			printInstrNumbers(new BufferedReader(new FileReader("traducción_manual.txt")));
+			printInstrNumbers(new BufferedReader(new FileReader("traducciÃ³n_manual.txt")));
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

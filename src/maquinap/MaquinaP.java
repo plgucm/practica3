@@ -2,6 +2,7 @@ package maquinap;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -11,6 +12,7 @@ import java.util.Stack;
 import maquinap.instrucciones.Instruccion;
 import maquinap.instrucciones.apila.Apila;
 import maquinap.instrucciones.apila.ApilaDir;
+import maquinap.instrucciones.apila.ApilaInd;
 import maquinap.instrucciones.aritmeticas.Div;
 import maquinap.instrucciones.aritmeticas.Mod;
 import maquinap.instrucciones.aritmeticas.Mult;
@@ -24,34 +26,41 @@ import maquinap.instrucciones.comparacion.MayorIgual;
 import maquinap.instrucciones.comparacion.Menor;
 import maquinap.instrucciones.comparacion.MenorIgual;
 import maquinap.instrucciones.desapila.DesapilaDir;
+import maquinap.instrucciones.desapila.DesapilaInd;
 import maquinap.instrucciones.io.Escribe;
 import maquinap.instrucciones.io.Lee;
+import maquinap.instrucciones.ir.IrA;
+import maquinap.instrucciones.ir.IrF;
+import maquinap.instrucciones.ir.IrInd;
+import maquinap.instrucciones.ir.IrV;
 import maquinap.instrucciones.logicas.And;
 import maquinap.instrucciones.logicas.Not;
 import maquinap.instrucciones.logicas.Or;
+import maquinap.instrucciones.memoria.Clona;
+import maquinap.instrucciones.memoria.Dup;
 import maquinap.instrucciones.memoria.Libera;
 import maquinap.instrucciones.memoria.Reserva;
+import maquinap.valor.Bool;
 import maquinap.valor.Int;
 import maquinap.valor.Valor;
 
 public class MaquinaP {
 
-	//private final Map<Integer, Valor<?>> memoriaDatosEstatica = new HashMap<Integer, Valor<?>>();	
-	private final List<Valor<?>> memoriaDatosDinamica = new ArrayList<Valor<?>>();	
+	private final Map<Integer, Valor<?>> memoriaDatosEstatica = new HashMap<Integer, Valor<?>>();
+	private final List<Valor<?>> memoriaDatosDinamica = new ArrayList<Valor<?>>();
 	private final Stack<Valor<?>> pilaEvaluacion = new Stack<Valor<?>>();
 	private final List<Instruccion> memoriaPrograma = new ArrayList<Instruccion>();
 	private int contadorPrograma = 0;
 	private boolean ejecuta = false;
 
-
 	public Map<Integer, Valor<?>> getMemoriaDatosEstatica() {
 		return memoriaDatosEstatica;
 	}
-	
+
 	public List<Valor<?>> getMemoriaDatosDinamica() {
 		return memoriaDatosDinamica;
 	}
-	
+
 	public Stack<Valor<?>> getPilaEvaluacion() {
 		return pilaEvaluacion;
 	}
@@ -59,149 +68,187 @@ public class MaquinaP {
 	public List<Instruccion> getMemoriaPrograma() {
 		return memoriaPrograma;
 	}
-	
-	public void incrementaContadorPrograma(){
+
+	public void incrementaContadorPrograma() {
 		++contadorPrograma;
 	}
-	
-	public void aumentarContadorPrograma(int cantidad){
+
+	public void aumentarContadorPrograma(int cantidad) {
 		contadorPrograma += cantidad;
 	}
 
 	public int getContadorPrograma() {
 		return contadorPrograma;
 	}
-	
+
 	public boolean isEjecuta() {
 		return ejecuta;
 	}
-	
-	//////////////////7777
-	
-	public static void main(String [] args){
+
+	// ////////////////7777
+
+	public static void main(String[] args) {
 		// args[0] cantidad de espacio pila de activacion.
 		MaquinaP mp = new MaquinaP();
-		mp.ejecuta("input.txt");
+		mp.ejecuta("traducción_manual.txt");
 	}
 
 	private void ejecuta(String archivoDeEntrada) {
 		Scanner sc;
 		try {
 			sc = new Scanner(new File(archivoDeEntrada));
-			ArrayList<String> lineaSinBasura = new ArrayList<String>(); 
-			
-			while (sc.hasNextLine()){
-				String [] linea = sc.nextLine().split(" ");
-				
-				final String espacios = " ", tabulaciones = "\t";
-				
-				String dato = null;
-				for (int i = 0, s = linea.length; i < s; ++i){
-					dato = linea[i];
-					if (!dato.contains(espacios) && !dato.contains(tabulaciones)){
-						lineaSinBasura.add(dato);						
-					}					
+			ArrayList<String> lineaSinBasura = new ArrayList<String>();
+
+			while (sc.hasNextLine()) {
+				String[] linea = sc.nextLine().split(" ");
+
+				if (linea.length > 0) {
+					String first = linea[0].trim();
+					if (!first.startsWith("//") && !first.isEmpty()) {
+						boolean tieneArgs = true;
+						if(first.endsWith("//")){
+							tieneArgs = false;
+							first = first.split("\t")[0].trim();
+						}
+						lineaSinBasura.add(first);
+
+						if (tieneArgs && linea.length > 1) {
+							String second = linea[1].trim();
+							if (second.contains("//")) {
+								String[] args = second.split("\t");
+								if (args.length > 0) {
+									String num = args[0].trim();
+									if (!num.isEmpty()) {
+										lineaSinBasura.add(num);
+									}
+								}
+							} else if (!second.isEmpty())
+								lineaSinBasura.add(second);
+						}
+
+						Instruccion instruccion = transformaEnInstruccion(lineaSinBasura);
+						agregaEnMemoriaDePrograma(instruccion);
+
+						lineaSinBasura.clear();
+					}
 				}
-				
-				if (lineaSinBasura.size() > 0){
-					//System.out.println(Arrays.toString(lineaSinBasura.toArray())+'\n');
-					
-					Instruccion instruccion = transformaEnInstruccion(lineaSinBasura);
-					agregaEnMemoriaDePrograma(instruccion);
-					
-					lineaSinBasura.clear();
-				}
-			}			
-			
-			sc.close();		
-			
+			}
+
+			sc.close();
+
 			Lee.abreEscaner();
-			while (contadorPrograma < memoriaPrograma.size()){
-				System.out.println("contadorPrograma:"+contadorPrograma);
-				System.out.println("pilaEvaluacion:"+getPilaEvaluacion().toString());
+			while (contadorPrograma < memoriaPrograma.size()) {
+				System.out.println("contadorPrograma:" + contadorPrograma);
+				System.out.println("pilaEvaluacion:"
+						+ getPilaEvaluacion().toString());
 				memoriaPrograma.get(contadorPrograma).ejecutar(this);
 			}
 			Lee.cierraEscaner();
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
-	
-	private Instruccion transformaEnInstruccion(ArrayList<String> line){
-		int size = line.size();
-		if (size ==  1){
-			String inst = line.get(0);
-			
+
+	private Instruccion transformaEnInstruccion(ArrayList<String> linea)
+			throws Exception {
+		int size = linea.size();
+		if (size == 1) {
+			String inst = linea.get(0);
+
 			// ENTRADA / SALIDA
-			
-			if (inst.equalsIgnoreCase("LEE")){
+
+			if (inst.equalsIgnoreCase("LEE")) {
 				return new Lee();
-			} else if (inst.equalsIgnoreCase("ESCRIBE")){
+			} else if (inst.equalsIgnoreCase("ESCRIBE")) {
 				return new Escribe();
 			}
-			
-			// ARITMETICAS			
-			
-			else if (inst.equalsIgnoreCase("MUL")){
+
+			// ARITMETICAS
+
+			else if (inst.equalsIgnoreCase("MUL")) {
 				return new Mult();
-			} else if (inst.equalsIgnoreCase("SUMA")){
+			} else if (inst.equalsIgnoreCase("SUMA")) {
 				return new Suma();
-			} else if (inst.equalsIgnoreCase("DIV")){
+			} else if (inst.equalsIgnoreCase("DIV")) {
 				return new Div();
-			} else if (inst.equalsIgnoreCase("RESTA")){
+			} else if (inst.equalsIgnoreCase("RESTA")) {
 				return new Resta();
-			} else if (inst.equalsIgnoreCase("MOD")){
+			} else if (inst.equalsIgnoreCase("MOD")) {
 				return new Mod();
-			} else if (inst.equalsIgnoreCase("NEG")){
+			} else if (inst.equalsIgnoreCase("NEG")) {
 				return new Neg();
-			} 			
-			
-			// COMPARACION			
-			
-			else if (inst.equalsIgnoreCase("IGUAL")){
+			}
+
+			// COMPARACION
+
+			else if (inst.equalsIgnoreCase("IGUAL")) {
 				return new Igual();
-			} else if (inst.equalsIgnoreCase("DISTINTO")){
+			} else if (inst.equalsIgnoreCase("DISTINTO")) {
 				return new Dist();
-			} else if (inst.equalsIgnoreCase("MENORIGUAL")){
+			} else if (inst.equalsIgnoreCase("MENORIGUAL")) {
 				return new MenorIgual();
-			} else if (inst.equalsIgnoreCase("MAYORIGUAL")){
+			} else if (inst.equalsIgnoreCase("MAYORIGUAL")) {
 				return new MayorIgual();
-			} else if (inst.equalsIgnoreCase("MENOR")){
+			} else if (inst.equalsIgnoreCase("MENOR")) {
 				return new Menor();
-			} else if (inst.equalsIgnoreCase("MAYOR")){
+			} else if (inst.equalsIgnoreCase("MAYOR")) {
 				return new Mayor();
 			}
-			
+
 			// LOGICAS
-			
-			else if (inst.equalsIgnoreCase("AND")){
+
+			else if (inst.equalsIgnoreCase("AND")) {
 				return new And();
-			} else if (inst.equalsIgnoreCase("OR")){
+			} else if (inst.equalsIgnoreCase("OR")) {
 				return new Or();
-			} else if (inst.equalsIgnoreCase("NOT")){
+			} else if (inst.equalsIgnoreCase("NOT")) {
 				return new Not();
-			}			
-		
-		} else if (size == 2){
-			String inst1 = line.get(0);
-			String inst2 = line.get(1);
+			}
+
 			
-			if (inst1.equalsIgnoreCase("APILA")){
+			else if (inst.equalsIgnoreCase("DESAPILA_IND")) {
+				return new DesapilaInd();
+			} else if (inst.equalsIgnoreCase("APILA_IND")) {
+				return new ApilaInd();
+			} else if (inst.equalsIgnoreCase("IR_IND")) {
+				return new IrInd();
+			} else if (inst.equalsIgnoreCase("DUP")) {
+				return new Dup();
+			}
+
+		} else if (size == 2) {
+			String inst1 = linea.get(0);
+			String inst2 = linea.get(1);
+
+			if (inst1.equalsIgnoreCase("APILA")) {
+				if (inst2.equalsIgnoreCase("true"))
+					return new Apila(new Bool(true));
+				else if (inst2.equalsIgnoreCase("false"))
+					return new Apila(new Bool(false));
 				return new Apila(new Int(Integer.valueOf(inst2)));
-			} else if (inst1.equalsIgnoreCase("APILA_DIR")){
+			} else if (inst1.equalsIgnoreCase("APILA_DIR")) {
 				return new ApilaDir(Integer.valueOf(inst2));
-			} else if (inst1.equalsIgnoreCase("DESAPILA_DIR")){
+			} else if (inst1.equalsIgnoreCase("DESAPILA_DIR")) {
 				return new DesapilaDir(Integer.valueOf(inst2));
-			}else if (inst1.equalsIgnoreCase("RESERVA")){
+			} else if (inst1.equalsIgnoreCase("RESERVA")) {
 				return new Reserva(Integer.valueOf(inst2));
-			} else if (inst1.equalsIgnoreCase("LIBERA")){
+			} else if (inst1.equalsIgnoreCase("LIBERA")) {
 				return new Libera(Integer.valueOf(inst2));
-			}	
-			
+			} else if (inst1.equalsIgnoreCase("IR_A")) {
+				return new IrA(Integer.valueOf(inst2));
+			} else if (inst1.equalsIgnoreCase("IR_V")) {
+				return new IrV(Integer.valueOf(inst2));
+			} else if (inst1.equalsIgnoreCase("IR_F")) {
+				return new IrF(Integer.valueOf(inst2));
+			} else if (inst1.equalsIgnoreCase("CLONA")) {
+				return new Clona(Integer.valueOf(inst2));
+			}
+
 		}
-		
-		return null;
+
+		throw new Exception("Conversión a instrucción fallida, entrada ~> "
+				+ Arrays.toString(linea.toArray()));
 	}
 
 	private void agregaEnMemoriaDePrograma(Instruccion instruccion) {
@@ -210,7 +257,6 @@ public class MaquinaP {
 
 	public void setContadorPrograma(int dir) {
 		contadorPrograma = dir;
-	}	
-	
+	}
 
 }
