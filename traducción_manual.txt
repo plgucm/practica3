@@ -416,12 +416,66 @@ apila_ind
 ir_ind				// Salta a la dirección de la cima de la pila y lo desapila
 
 
+// /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+// Traducción de procedimiento AlmacenaEnSecuencia(TArbol arbol) (prólogo + cuerpo + epílogo) 
 
+// { Prólogo } N = 2, Y = 3
 
+// Instrucción 291
+apila_dir 0			// Salvar el valor del antiguo display (N es el nivel del procedimiento) 
+apila 2
+suma 
+apila_dir 2			// N
+desapila_ind
+desapila_dir 2			// N. Fijar el valor del nuevo display 
+apila_dir 0			// Fijar  de  manera  apropiada  el  puntero  a  la  cima  de  la  pila  de  registros  de activación (pos. 0)
+apila 3				// Y
+suma
+desapila_dir 0
 
+// { Cuerpo }
 
+// Instrucción 301
+apila_dir 1			// if (numElem < 10) and (arbol != null) then { 
+apila 1				// desplazamiento desde el parámetro de la función ConstruyeSecOrdenada(TArbol) hasta var numElem
+suma
+apila_ind			// Tengo el valor (si fuera un puntero tendría que repetir esta instrucción)
+apila 10
+menor
+apila_dir 2
+apila 0
+suma
+apila_ind
+apila 0
+distino
+and
+ir_f $FIN_IF		// } 
 
+// Prellamada activación AlmacenaEnSecuencia(arbol->.izq); 
+
+// Instrucción 315
+apila_dir 0			// Calcular  la  dirección  de  inicio  del segmento de datos del nuevo registro de activación
+apila 3
+suma
+dup				// El paso del parámetro árbol->.izq
+apila 0
+suma
+apila_dir 2			// Código para evaluar arbol->.izq
+apila 0
+suma
+apila_ind			// dir. memoria arbol.
+apila 1
+suma				// dir. memoria izq.
+clona 1				// clonamos el valor de la dirección de memoria donde está izq.
+apila_dir 0			// Por último es necesario apilar la dirección de retorno, es este caso 201
+apila 1
+suma 
+apila 334			// 334 es la dirección de retorno de la llamada a AlmacenaEnSecuencia(arbol->.izq) y nos vamos al final de los if-elseif-elseif 
+desapila_ind
+ir_a 291			
+
+// Instruccion 334
 
 
 

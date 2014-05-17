@@ -36,7 +36,7 @@ import maquinap.valor.Valor;
 
 public class MaquinaP {
 
-	private final Map<Integer, Valor<?>> memoriaDatosEstatica = new HashMap<Integer, Valor<?>>();	
+	//private final Map<Integer, Valor<?>> memoriaDatosEstatica = new HashMap<Integer, Valor<?>>();	
 	private final List<Valor<?>> memoriaDatosDinamica = new ArrayList<Valor<?>>();	
 	private final Stack<Valor<?>> pilaEvaluacion = new Stack<Valor<?>>();
 	private final List<Instruccion> memoriaPrograma = new ArrayList<Instruccion>();
@@ -79,6 +79,7 @@ public class MaquinaP {
 	//////////////////7777
 	
 	public static void main(String [] args){
+		// args[0] cantidad de espacio pila de activacion.
 		MaquinaP mp = new MaquinaP();
 		mp.ejecuta("input.txt");
 	}
