@@ -24,6 +24,8 @@ public class Clona extends Instruccion {
 			dirCimaPila++;
 			dirSubCimaPila++;
 		}
+
+		maq.aumentarContadorPrograma(1);
 	}
 
 }

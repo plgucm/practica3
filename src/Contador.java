@@ -29,7 +29,7 @@ public class Contador {
 	
 	public static void main(String[] args) {
 		try {
-			printInstrNumbers(new BufferedReader(new FileReader("traducción_manual.txt")));
+			printInstrNumbers(new BufferedReader(new FileReader("input.txt")));
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
