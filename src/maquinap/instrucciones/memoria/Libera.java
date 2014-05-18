@@ -28,8 +28,8 @@ public class Libera extends Instruccion {
 		// Uso copias para no liarla.
 		int dirPilaTmp = dirPila;
 		int cantidadTmp = this.cantidad;
-		Map<Integer, Valor<?>> me = maq.getMemoriaDatos();
-		int ini = -1, fin = -1;
+		Map<Integer, Valor<?>> memoriaDatos = maq.getMemoriaDatos();
+		int ini = -1, fin = -1; // variables para poner datos a 0
 		Collections.sort(maq.getListaDeEspacios(), comparator);
 
 		for (Espacio espacio : esp) {
@@ -49,7 +49,6 @@ public class Libera extends Instruccion {
 						espacio.setLibre(true);
 						
 						ini = espacio.getDir_com();
-						fin = ini + espacio.getTam();
 
 						dirPilaTmp += tam2;
 						cantidadTmp -= tam2;
@@ -60,7 +59,6 @@ public class Libera extends Instruccion {
 						cantidadTmp -= espacio.getTam();
 
 						ini = espacio.getDir_com();
-						fin = ini + espacio.getTam();
 					}
 
 				} else if (espacio.loLiberaExacto(dirPilaTmp, cantidadTmp)) {
@@ -78,7 +76,6 @@ public class Libera extends Instruccion {
 						espacio.setLibre(true);
 
 						ini = espacio.getDir_com();
-						fin = ini + espacio.getTam();
 						
 						dirPilaTmp += tam2;
 						cantidadTmp -= tam2;
@@ -90,7 +87,6 @@ public class Libera extends Instruccion {
 						
 
 						ini = espacio.getDir_com();
-						fin = ini + espacio.getTam();
 					}
 					break;
 
@@ -111,7 +107,6 @@ public class Libera extends Instruccion {
 
 
 					ini = espacio.getDir_com();
-					fin = ini + espacio.getTam();
 					
 					dirPilaTmp += espacio.getTam();
 					cantidadTmp -= espacio.getTam();
@@ -121,8 +116,11 @@ public class Libera extends Instruccion {
 			}
 		}
 		
+		// Memoria de datos se pone a 0 cuando se libera
+		
+		fin = ini + this.cantidad;
 		while (ini < fin){
-			maq.getMemoriaDatos().put(ini++, new Int(0));
+			memoriaDatos.put(ini++, new Int(0));
 		}
 
 		/* fusiona y simplifica la lista de espacios. */

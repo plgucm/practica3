@@ -971,7 +971,7 @@ dup				// El paso del parámetro árbol
 apila 0
 suma
 apila 14			// Código para evaluar arbol, 0-13 ocupados por 1 (puntero cima pial reg. act.) + 3 (displays o niveles) + 10 (datos globales ocupados por TSecuencia)
-desapila_ind				// CLONA porque el parámetro formal es por valor y el real es un designador
+desapila_ind			
 apila_dir 0			// Por último es necesario apilar la dirección de retorno, en este caso 725
 apila 1
 suma 
