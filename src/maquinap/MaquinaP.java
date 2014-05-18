@@ -98,7 +98,7 @@ public class MaquinaP {
 	public static void main(String[] args) {
 		// args[0] cantidad de espacio pila de activacion.
 		MaquinaP mp = new MaquinaP();
-		mp.ejecuta("traducción_manual.txt");
+		mp.ejecuta("input.txt");
 	}
 
 	private void ejecuta(String archivoDeEntrada) {
