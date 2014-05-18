@@ -28,7 +28,7 @@ public class MayorIgual extends Instruccion {
 			// true > false
 			comparacion = ((Boolean) valor1.getValor()) && !((Boolean) valor2.getValor());
 		} else {
-			comparacion = (Integer) valor1.getValor() < (Integer) valor2.getValor();
+			comparacion = (Integer) valor1.getValor() <= (Integer) valor2.getValor();
 		}
 		
 		Bool newValue = new Bool(comparacion);

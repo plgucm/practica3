@@ -4,6 +4,7 @@ import java.util.Stack;
 
 import maquinap.MaquinaP;
 import maquinap.instrucciones.Instruccion;
+import maquinap.valor.Int;
 import maquinap.valor.Valor;
 
 public class ApilaDir extends Instruccion {
@@ -18,13 +19,12 @@ public class ApilaDir extends Instruccion {
 	public void ejecutar(MaquinaP maq) throws Exception {
 		Valor<?> valor = maq.getMemoriaDatos().get(dir);	
 		
-		if(valor == null)
-			throw new UnsupportedOperationException(getClass().getSimpleName()
-					+ " direcciÃ³n no vÃ¡lida.");
-		
+		if(valor == null){
+			valor = new Int(0);
+		}
 		Stack<Valor<?>> pe = maq.getPilaEvaluacion();
 		if (pe.size() == pe.capacity()){
-			throw new Exception("Máxima dirección de la pila.");
+			throw new Exception("Mï¿½xima direcciï¿½n de la pila.");
 		}		
 		
 		maq.getPilaEvaluacion().push(valor);

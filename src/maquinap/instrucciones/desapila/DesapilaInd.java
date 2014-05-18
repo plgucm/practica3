@@ -21,8 +21,11 @@ public class DesapilaInd extends Instruccion {
 		Valor<?> subCima = pila.pop();
 		
 		if (subCima instanceof Int) {
+			if(cima == null) {
+				cima = new Int(0);
+			}
 			
-			maq.getMemoriaDatos().put(((Int)cima).getValor(), subCima);
+			maq.getMemoriaDatos().put(((Int)subCima).getValor(), cima);
 			maq.incrementaContadorPrograma();
 			
 		} else

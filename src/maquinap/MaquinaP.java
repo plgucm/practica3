@@ -53,18 +53,19 @@ public class MaquinaP {
 	private final Stack<Valor<?>> pilaEvaluacion = new Stack<Valor<?>>();
 	private final List<Instruccion> memoriaPrograma = new ArrayList<Instruccion>();
 	private int contadorPrograma = 0;
-	private boolean ejecuta = false;
-	
-	private final int TAM_MONTON = 512;
-	
+
+	private static final boolean DEBUG = false;
+	private static final int INICIO_MONTON = 1024;
+	private static final int TAM_MONTON = 2048;
+
 	public MaquinaP() {
-		listaDeHuecos.add(new Espacio(0, TAM_MONTON, true));		
+		listaDeHuecos.add(new Espacio(INICIO_MONTON, TAM_MONTON, true));
 	}
 
 	public Map<Integer, Valor<?>> getMemoriaDatos() {
 		return memoriaDatos;
 	}
-	
+
 	public List<Espacio> getListaDeEspacios() {
 		return listaDeHuecos;
 	}
@@ -89,16 +90,10 @@ public class MaquinaP {
 		return contadorPrograma;
 	}
 
-	public boolean isEjecuta() {
-		return ejecuta;
-	}
-
-	// ////////////////7777
+	// ////////////////
 
 	public static void main(String[] args) {
-		// args[0] cantidad de espacio pila de activacion.
-		MaquinaP mp = new MaquinaP();
-		mp.ejecuta("input.txt");
+		new MaquinaP().ejecuta("traduccion_manual.txt");
 	}
 
 	private void ejecuta(String archivoDeEntrada) {
@@ -114,7 +109,7 @@ public class MaquinaP {
 					String first = linea[0].trim();
 					if (!first.startsWith("//") && !first.isEmpty()) {
 						boolean tieneArgs = true;
-						if(first.endsWith("//")){
+						if (first.endsWith("//")) {
 							tieneArgs = false;
 							first = first.split("\t")[0].trim();
 						}
@@ -146,11 +141,19 @@ public class MaquinaP {
 
 			Lee.abreEscaner();
 			while (contadorPrograma < memoriaPrograma.size()) {
-				System.out.println("contadorPrograma:" + contadorPrograma);
-				System.out.println("pilaEvaluacion:"
-						+ getPilaEvaluacion().toString());
-				System.out.println("memoriaDeDatos:" + Arrays.toString(getMemoriaDatos().entrySet().toArray()));
-				memoriaPrograma.get(contadorPrograma).ejecutar(this);
+				Instruccion instr = memoriaPrograma.get(contadorPrograma);
+				if (DEBUG) {
+					System.out.println("----------------------------------");
+					System.out.println("contadorPrograma:" + contadorPrograma
+							+ ", instr: "
+							+ instr.toString());
+					System.out.println("pilaEvaluacion:"
+							+ getPilaEvaluacion().toString());
+					System.out.println("memoriaDeDatos:"
+							+ Arrays.toString(getMemoriaDatos().entrySet()
+									.toArray()));
+				}
+				instr.ejecutar(this);
 			}
 			Lee.cierraEscaner();
 
@@ -215,7 +218,6 @@ public class MaquinaP {
 				return new Not();
 			}
 
-			
 			else if (inst.equalsIgnoreCase("DESAPILA_IND")) {
 				return new DesapilaInd();
 			} else if (inst.equalsIgnoreCase("APILA_IND")) {

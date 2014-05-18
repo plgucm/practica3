@@ -1,5 +1,6 @@
 package maquinap.instrucciones.memoria;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
@@ -94,6 +95,8 @@ public class Libera extends Instruccion {
 		}
 		
 		/* fusiona y simplifica la lista de espacios. */		
+		ArrayList<Espacio> espacios = new ArrayList<Espacio>();
+		
 		Collections.sort(esp, comparator);		
 		Iterator<Espacio> it = esp.iterator();
 		Espacio eAnt = it.next();
@@ -102,11 +105,14 @@ public class Libera extends Instruccion {
 			if (eAnt.isLibre() && e.isLibre()){
 				e.setDir_com(eAnt.getDir_com());
 				e.setTam(e.getTam()+eAnt.getTam());
-				esp.remove(eAnt);				
+				espacios.add(eAnt);				
 			}
 			eAnt = e;
 		}
 		
+		for (Espacio e : espacios){
+			esp.remove(e);
+		}
 		
 		maq.aumentarContadorPrograma(1);		
 	}	

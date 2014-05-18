@@ -23,12 +23,11 @@ public class ApilaInd extends Instruccion {
 			
 			Valor<?> val = maq.getMemoriaDatos().get(cima.getValor());
 
-			if (val == null)
-				throw new UnsupportedOperationException(getClass()
-						.getSimpleName() + " dirección no válida.");
-
+			if (val == null){
+				val = new Int(0);
+			}
 			pila.push(val);
-			
+			maq.incrementaContadorPrograma();
 		} else
 			throw new UnsupportedOperationException(getClass().getSimpleName()
 					+ " la cima no es un entero, es " + cima.getClass());
