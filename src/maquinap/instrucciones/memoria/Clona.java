@@ -2,6 +2,7 @@ package maquinap.instrucciones.memoria;
 
 import maquinap.MaquinaP;
 import maquinap.instrucciones.Instruccion;
+import maquinap.valor.Valor;
 
 public class Clona extends Instruccion {
 	
@@ -13,10 +14,16 @@ public class Clona extends Instruccion {
 
 	@Override
 	public void ejecutar(MaquinaP maq) throws Exception {
+		int dirCimaPila = (Integer) maq.getPilaEvaluacion().pop().getValor();
+		int dirSubCimaPila = (Integer) maq.getPilaEvaluacion().pop().getValor();
 		
-
-		
-		
+		int len = dirCimaPila+cantidad;
+		while (dirCimaPila<len){
+			Valor<?> v = maq.getMemoriaDatos().get(dirCimaPila);
+			maq.getMemoriaDatos().put(dirSubCimaPila, v);
+			dirCimaPila++;
+			dirSubCimaPila++;
+		}
 	}
 
 }
