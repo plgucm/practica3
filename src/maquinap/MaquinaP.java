@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
@@ -38,6 +39,7 @@ import maquinap.instrucciones.logicas.Not;
 import maquinap.instrucciones.logicas.Or;
 import maquinap.instrucciones.memoria.Clona;
 import maquinap.instrucciones.memoria.Dup;
+import maquinap.instrucciones.memoria.Espacio;
 import maquinap.instrucciones.memoria.Libera;
 import maquinap.instrucciones.memoria.Reserva;
 import maquinap.valor.Bool;
@@ -46,19 +48,25 @@ import maquinap.valor.Valor;
 
 public class MaquinaP {
 
-	private final Map<Integer, Valor<?>> memoriaDatosEstatica = new HashMap<Integer, Valor<?>>();
-	private final List<Valor<?>> memoriaDatosDinamica = new ArrayList<Valor<?>>();
+	private final Map<Integer, Valor<?>> memoriaDatos = new HashMap<Integer, Valor<?>>();
+	private final List<Espacio> listaDeHuecos = new LinkedList<Espacio>();
 	private final Stack<Valor<?>> pilaEvaluacion = new Stack<Valor<?>>();
 	private final List<Instruccion> memoriaPrograma = new ArrayList<Instruccion>();
 	private int contadorPrograma = 0;
 	private boolean ejecuta = false;
-
-	public Map<Integer, Valor<?>> getMemoriaDatosEstatica() {
-		return memoriaDatosEstatica;
+	
+	private final int TAM_MONTON = 512;
+	
+	public MaquinaP() {
+		listaDeHuecos.add(new Espacio(0, TAM_MONTON, true));		
 	}
 
-	public List<Valor<?>> getMemoriaDatosDinamica() {
-		return memoriaDatosDinamica;
+	public Map<Integer, Valor<?>> getMemoriaDatos() {
+		return memoriaDatos;
+	}
+	
+	public List<Espacio> getListaDeEspacios() {
+		return listaDeHuecos;
 	}
 
 	public Stack<Valor<?>> getPilaEvaluacion() {

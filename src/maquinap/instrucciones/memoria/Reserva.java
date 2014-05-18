@@ -1,12 +1,8 @@
 package maquinap.instrucciones.memoria;
 
-import java.util.ArrayList;
-
 import maquinap.MaquinaP;
 import maquinap.instrucciones.Instruccion;
 import maquinap.valor.Int;
-import maquinap.valor.Vacio;
-import maquinap.valor.Valor;
 
 public class Reserva extends Instruccion {
 	
@@ -18,31 +14,31 @@ public class Reserva extends Instruccion {
 
 	@Override
 	public void ejecutar(MaquinaP maq) throws Exception {
-		ArrayList<Valor<?>> md = (ArrayList<Valor<?>>) maq.getMemoriaDatosDinamica();
+		boolean reservado = false;
+		int tam, dir = 0;
 		
-		int espacio = 0, direccion = 0;
-		
-		for (Valor<?> v : md){
-			if (v instanceof Vacio){
-				espacio++;
-				if (espacio == cantidad){
-					break;
-				}
-			} else {
-				espacio = 0;
-				direccion++;
+		for (Espacio e : maq.getListaDeEspacios()){
+			tam = e.getTam();
+			dir = e.getDir_com();
+			if (tam > cantidad){
+				maq.getListaDeEspacios().add(new Espacio(dir, tam, false));	
+				e.setTam(tam-cantidad);
+				e.setDir_com(dir+cantidad);		
+				e.setLibre(false);						
+				reservado = true;
+				break;
+			} else if (tam == cantidad){				
+				e.setLibre(false);
+				reservado = true;
+				break;
 			}
 		}
 		
-		if (!(direccion < md.size()) || (espacio < cantidad)){
-			for (int i = 0; i < cantidad; ++i){
-				md.add(new Vacio());
-			}
-			direccion = md.size()-cantidad;
+		if (!reservado){
+			throw new Exception("No hay memoria suficiente para reservar esa cantidad.");
+		} else {
+			maq.getPilaEvaluacion().push(new Int(dir));
 		}
-		
-		Int item = new Int(new Integer(direccion));
-		maq.getPilaEvaluacion().push(item);
 		
 		maq.aumentarContadorPrograma(1);		
 	}

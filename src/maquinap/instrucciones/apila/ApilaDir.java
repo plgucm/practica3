@@ -16,7 +16,7 @@ public class ApilaDir extends Instruccion {
 
 	@Override
 	public void ejecutar(MaquinaP maq) throws Exception {
-		Valor<?> valor = maq.getMemoriaDatosEstatica().get(dir);	
+		Valor<?> valor = maq.getMemoriaDatos().get(dir);	
 		
 		if(valor == null)
 			throw new UnsupportedOperationException(getClass().getSimpleName()

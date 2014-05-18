@@ -21,7 +21,7 @@ public class ApilaInd extends Instruccion {
 		
 		if (cima instanceof Int) {
 			
-			Valor<?> val = maq.getMemoriaDatosEstatica().get(cima.getValor());
+			Valor<?> val = maq.getMemoriaDatos().get(cima.getValor());
 
 			if (val == null)
 				throw new UnsupportedOperationException(getClass()

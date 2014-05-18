@@ -22,7 +22,7 @@ public class DesapilaInd extends Instruccion {
 		
 		if (subCima instanceof Int) {
 			
-			maq.getMemoriaDatosEstatica().put(((Int)cima).getValor(), subCima);
+			maq.getMemoriaDatos().put(((Int)cima).getValor(), subCima);
 			maq.incrementaContadorPrograma();
 			
 		} else

@@ -13,7 +13,10 @@ public class Clona extends Instruccion {
 
 	@Override
 	public void ejecutar(MaquinaP maq) throws Exception {
-		// TODO		
+		
+
+		
+		
 	}
 
 }
