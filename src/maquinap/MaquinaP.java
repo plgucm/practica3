@@ -149,6 +149,7 @@ public class MaquinaP {
 				System.out.println("contadorPrograma:" + contadorPrograma);
 				System.out.println("pilaEvaluacion:"
 						+ getPilaEvaluacion().toString());
+				System.out.println("memoriaDeDatos:" + Arrays.toString(getMemoriaDatos().entrySet().toArray()));
 				memoriaPrograma.get(contadorPrograma).ejecutar(this);
 			}
 			Lee.cierraEscaner();
