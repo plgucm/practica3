@@ -437,7 +437,7 @@ desapila_dir 0
 
 // Instrucción 301
 apila_dir 1			// if (numElem < 10) and (arbol != null) then { 
-apila 1				// desplazamiento desde el parámetro de la función ConstruyeSecOrdenada(TArbol) hasta var numElem
+apila 1				// desplazamiento desde el parámetro de la función AlmacenaEnSecuencia(TArbol) hasta var numElem
 suma
 apila_ind			// Tengo el valor (si fuera un puntero tendría que repetir esta instrucción)
 apila 10
@@ -971,7 +971,7 @@ dup				// El paso del parámetro árbol
 apila 0
 suma
 apila 14			// Código para evaluar arbol, 0-13 ocupados por 1 (puntero cima pial reg. act.) + 3 (displays o niveles) + 10 (datos globales ocupados por TSecuencia)
-desapila_ind			
+desapila_ind			// El  parámetro  formal  es  por  variable luego el real es un designador
 apila_dir 0			// Por último es necesario apilar la dirección de retorno, en este caso 725
 apila 1
 suma 
