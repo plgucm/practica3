@@ -5,12 +5,9 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 
 import maquinap.MaquinaP;
 import maquinap.instrucciones.Instruccion;
-import maquinap.valor.Int;
-import maquinap.valor.Valor;
 
 public class Libera extends Instruccion {
 
@@ -28,8 +25,6 @@ public class Libera extends Instruccion {
 		// Uso copias para no liarla.
 		int dirPilaTmp = dirPila;
 		int cantidadTmp = this.cantidad;
-		Map<Integer, Valor<?>> memoriaDatos = maq.getMemoriaDatos();
-		int ini = -1, fin = -1; // variables para poner datos a 0
 		Collections.sort(maq.getListaDeEspacios(), comparator);
 
 		for (Espacio espacio : esp) {
@@ -47,8 +42,6 @@ public class Libera extends Instruccion {
 						espacio.setTam(tam2);
 						espacio.setDir_com(dirPilaTmp);
 						espacio.setLibre(true);
-						
-						ini = espacio.getDir_com();
 
 						dirPilaTmp += tam2;
 						cantidadTmp -= tam2;
@@ -58,7 +51,6 @@ public class Libera extends Instruccion {
 						dirPilaTmp += espacio.getTam();
 						cantidadTmp -= espacio.getTam();
 
-						ini = espacio.getDir_com();
 					}
 
 				} else if (espacio.loLiberaExacto(dirPilaTmp, cantidadTmp)) {
@@ -74,8 +66,6 @@ public class Libera extends Instruccion {
 						espacio.setTam(tam2);
 						espacio.setDir_com(dirPilaTmp);
 						espacio.setLibre(true);
-
-						ini = espacio.getDir_com();
 						
 						dirPilaTmp += tam2;
 						cantidadTmp -= tam2;
@@ -85,8 +75,6 @@ public class Libera extends Instruccion {
 						dirPilaTmp += espacio.getTam();
 						cantidadTmp -= espacio.getTam();
 						
-
-						ini = espacio.getDir_com();
 					}
 					break;
 
@@ -104,9 +92,6 @@ public class Libera extends Instruccion {
 					espacio.setLibre(true);
 					espacio.setTam(espacio.getTam() - tam1 - tam3);
 					espacio.setDir_com(espacio.getDir_com() + tam1);
-
-
-					ini = espacio.getDir_com();
 					
 					dirPilaTmp += espacio.getTam();
 					cantidadTmp -= espacio.getTam();
@@ -114,13 +99,6 @@ public class Libera extends Instruccion {
 					break;
 				}
 			}
-		}
-		
-		// Memoria de datos se pone a 0 cuando se libera
-		
-		fin = ini + this.cantidad;
-		while (ini < fin){
-			memoriaDatos.put(ini++, new Int(0));
 		}
 
 		/* fusiona y simplifica la lista de espacios. */
